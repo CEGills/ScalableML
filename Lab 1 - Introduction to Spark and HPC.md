@@ -5,7 +5,7 @@
 ## Study schedule
 
 - [Task 1](#1-connect-to-hpc-and-install-spark): To finish by Wednesday. **Critical**
-- [Task 2](#2-run-spark): To finish by Wednesday. **Critical**
+- [Task 2](#2-run-pyspark): To finish by Wednesday. **Critical**
 - [Task 3](#3-log-mining-with-spark---example): To finish by Thursday. **Essential**
 - [Task 4](#4-big-data-log-mining-with-spark): To finish by Thursday. **Essential**
 - [Task 5](#5-exercises-reference-solutions-will-be-provided-on-the-following-monday): To finish before the next Monday. ***Exercise***
@@ -14,7 +14,7 @@
 **Suggested reading**:
 
 - [Spark Overview](https://spark.apache.org/docs/latest/index.html)
-- [Spark Quick Start](https://spark.apache.org/docs/3.0.1/quick-start.html) (Choose **Python** rather than the default *Scala*)
+- [Spark Quick Start](https://spark.apache.org/docs/latest/quick-start.html) (Choose **Python** rather than the default *Scala*)
 - Chapters 2 to 4 of [PySpark tutorial](https://runawayhorse001.github.io/LearningApacheSpark/pyspark.pdf) (several sections in Chapter 3 can be safely skipped)
 - Reference: [PySpark documentation](https://spark.apache.org/docs/latest/api/python/index.html#)
 - Reference: [PySpark source code](https://github.com/apache/spark/tree/master/python)
@@ -32,13 +32,15 @@ You **MUST** first connect to the [university's VPN](https://www.sheffield.ac.uk
 
 ### 1.1 Connect to ShARC HPC via SSH
 
-Follow the [official instruction](https://docs.hpc.shef.ac.uk/en/latest/hpc/index.html) from our university. I have get your HPC account created already (first step done). Use your university **username** such as `abc18de` and the associated password to log in.
+Follow the [official instruction](https://docs.hpc.shef.ac.uk/en/latest/hpc/index.html) from our university. I have get your HPC account created already (first step done). Use your university **username** such as `abc18de` and the associated password to log in. You are requried to use [Multi-factor authentication (MFA)](https://www.sheffield.ac.uk/it-services/vpn) to connect to VPN. If you have problem logging in, please contact [it-servicedesk@sheffield.ac.uk](mailto:it-servicedesk@sheffield.ac.uk).
 
-If you have problem logging in, email me 1) your username; 2) a connection status of your VPN, 3) a screen capture of the error message (**never send me your password**). If you can log in but encounter HPC-related problem, you can email `hpc@sheffield.ac.uk` for help.
+If you still have problem logging in, email me 1) your username; 2) a connection status of your VPN, 3) a screen capture of the error message (**never send me your password**). I will try to see whether I identify what the problem is. If you can log in but encounter HPC-related problem, you can email [hpc@sheffield.ac.uk](hpc@sheffield.ac.uk) for help.
 
 Following the [official instructions](https://docs.hpc.shef.ac.uk/en/latest/hpc/connecting.html) for [Windows](https://docs.hpc.shef.ac.uk/en/latest/hpc/connecting.html#ssh-client-software-on-windows) or [Mac OS/X and Linux](https://docs.hpc.shef.ac.uk/en/latest/hpc/connecting.html#ssh-client-software-on-mac-os-x-and-linux) to open a terminal and connect to sharc via SSH by
 
-`ssh -X $USER@$sharc.shef.ac.uk`
+```sh
+ssh -X $USER@sharc.shef.ac.uk  # -X is optional as we do not show graphics directly so simply ssh $USER@sharc.shef.ac.uk will do
+```
 
 You need to replace `$USER` with your username, let's assume it is `abc1de`. If successful, you should see 
 
@@ -167,7 +169,9 @@ Now open a command prompt and type `pyspark`. You should see pyspark 3.0.1 runni
 
 **From this point on, we will assume that you are using the HPC terminal unless otherwise stated**. Run PySpark shell on your own machine can do the same job.
 
-## 2. Run Spark
+## 2. Run PySpark
+
+Once PySpark has been installed, after _each_ log-in, you need to do the following to run PySpark.
 
 ### Get a node and activate myspark
 
@@ -180,7 +184,7 @@ Now open a command prompt and type `pyspark`. You should see pyspark 3.0.1 runni
    source activate myspark
   ```
 
-  Alternatively, put `HPC/myspark.sh` under your *root* directory (see above on how to transfer files) and do `source myspark.sh` will run these three commands in sequence. You could modify it further to suit yourself better.
+  Alternatively, put `HPC/myspark.sh` under your *root* directory (see above on how to transfer files) and run the above three commands in sequence via  `source myspark.sh` (see more details [here](https://docs.hpc.shef.ac.uk/en/latest/hpc/modules.html#convenient-ways-to-set-up-your-environment-for-different-projects)). You could modify it further to suit yourself better.
 
 ### Interactive shell
 
@@ -436,11 +440,11 @@ Hello Spark: There are 71600 hosts from Japan.
 The analytic task you are doing above is *Log Mining*. You can imaging nowadays, log files are big and manual analysis will be time consuming. Follow examples above, answer the following questions on **NASA_access_log_Aug95.gz**.
 
 1. How many requests are there in total?
-2. How many requests are from `uplherc.up.com`?
+2. How many requests are from `gateway.timken.com`?
 3. How many requests are on 15th August 1995?
 4. How many 404 (page not found) errors are there in total?
 5. How many 404 (page not found) errors are there on 15th August?
-6. How many 404 (page not found) errors from `uplherc.up.com` are there on 15th August?
+6. How many 404 (page not found) errors from `gateway.timken.com` are there on 15th August?
 
 You are encouraged to try out in the pyspark shell first to figure out the right solutions and then write a Python script, e.g. `Lab1_exercise.py` with a batch file (e.g. `Lab1_Exercise_Batch.sh` to produce the output neatly under `Output`, e.g. in a file `Lab1_exercise.txt`.
 
