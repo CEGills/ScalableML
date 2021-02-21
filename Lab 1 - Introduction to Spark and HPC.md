@@ -13,10 +13,10 @@
 
 **Suggested reading**:
 
-- [Spark Overview](https://spark.apache.org/docs/latest/index.html)
-- [Spark Quick Start](https://spark.apache.org/docs/latest/quick-start.html) (Choose **Python** rather than the default *Scala*)
+- [Spark Overview](https://spark.apache.org/docs/3.0.1/index.html)
+- [Spark Quick Start](https://spark.apache.org/docs/3.0.1/quick-start.html) (Choose **Python** rather than the default *Scala*)
 - Chapters 2 to 4 of [PySpark tutorial](https://runawayhorse001.github.io/LearningApacheSpark/pyspark.pdf) (several sections in Chapter 3 can be safely skipped)
-- Reference: [PySpark documentation](https://spark.apache.org/docs/latest/api/python/index.html#)
+- Reference: [PySpark documentation](https://spark.apache.org/docs/3.0.1/api/python/index.html#)
 - Reference: [PySpark source code](https://github.com/apache/spark/tree/master/python)
 
 **Note - Please READ before proceeding**:
@@ -194,7 +194,7 @@ Run pyspark (optionally, specify to use multiple cores):
 pyspark  # pyspark --master local[4] for 4 cores
 ```
 
-You will see the spark splash above. `spark` ([SparkSession](https://spark.apache.org/docs/2.1.0/api/python/pyspark.sql.html?highlight=sparksession#pyspark.sql.SparkSession)) and `sc` ([SparkContext](https://spark.apache.org/docs/latest/api/python/pyspark.html#pyspark.SparkContext)) are automatically created.
+You will see the spark splash above. `spark` ([SparkSession](https://spark.apache.org/docs/2.1.0/api/python/pyspark.sql.html?highlight=sparksession#pyspark.sql.SparkSession)) and `sc` ([SparkContext](https://spark.apache.org/docs/3.0.1/api/python/pyspark.html#pyspark.SparkContext)) are automatically created.
 
 Check your SparkSession and SparkContext object and you will see something like
 
@@ -391,7 +391,7 @@ spark.stop()
 
 See [how to submit batch jobs to ShARC](https://docs.hpc.shef.ac.uk/en/latest/hpc/scheduler/submit.html#running-batch-jobs) and follow the instructions for **SGE**. **Reminder:** The more resources you request, the longer you need to queue.
 
-Interactive mode will be good for learning, exploring and debugging, with smaller data. For big data, it will be more convenient to use batch processing. You submit the job to the node to join a queue. Once allocated, your job will run, with output properly recorded. This is done via a shell script. **Warning: Do not create such a file under WINDOWS text format** (see the *line ending warning* above).
+Interactive mode will be good for learning, exploring and debugging, with smaller data. For big data, it will be more convenient to use batch processing. You submit the job to the node to join a queue. Once allocated, your job will run, with output properly recorded. This is done via a shell script. 
 
 Create a file `Lab1_SubmitBatch.sh`
 
@@ -425,8 +425,6 @@ cd HPC
 qsub Lab1_SubmitBatch.sh # or qsub HPC/Lab1_SubmitBatch.sh if you are at /home/abc1de/com6012/ScalableML
 ```
 
-Check the status of your queuing/running job(s) `qstat` (jobs not shown are finished already).
-
 Check your output file, which is **`COM6012_Lab1.txt`** in the `Output` folder specified with option **`-o`** above. You can change it to a name you like. A sample output file named `COM6012_Lab1_SAMPLE.txt` is now in the GitHub `Output` folder. The results are
 
 ```sh
@@ -434,6 +432,36 @@ Hello Spark: There are 35924 hosts from UK.
 
 Hello Spark: There are 71600 hosts from Japan.
 ```
+
+#### Two important notes
+
+- Make sure that your `.sh` file, e.g. `myfile.sh`, has Linux/Unix rather than Windows line ending. To check, do the following on HPC
+  
+  ```sh
+  [abc1de@sharc-node004 HPC]$ file myfile.sh
+  myfile.sh: ASCII text, with CRLF line terminators  # Output
+  ```
+
+  In the above example, it shows the file has "CRLF line terminators", which will not be recognised by Linux/Unix. You can fix it by
+
+  ```sh
+  [abc1de@sharc-node004 HPC]$ dos2unix myfile.sh
+  dos2unix: converting file myfile.sh to Unix format ...  # Output
+  ```
+  
+  Now check again, and it shows no "CRLF line terminators", which means it is now in the Linux/Unix line endings and ready to go.
+
+  ```sh
+  [abc1de@sharc-node004 HPC]$ file myfile.sh
+  myfile.sh: ASCII text  # Output
+  ```
+
+- Make sure that you are at the correct directory and the file exists using `pwd` (the current working directory) and `ls` (list the content). Check the status of your queuing/ running job(s) using `qstat` (jobs not shown are finished already). `qw` means the job is in the queue and waiting to be scheduled. `eqw` means the job is waiting in error state, in which case you should check the error and use `qdel JOB_ID` to delete the job. If you want to print out the working directory when your code is running, you would use
+
+  ```python
+  import os
+  print(os.getcwd())
+  ```
 
 ## 5. Exercises (reference solutions will be provided on the following Monday)
 
@@ -452,7 +480,7 @@ You are encouraged to try out in the pyspark shell first to figure out the right
 
 ### More log mining questions
 
-You are encouraged to explore these more challenging questions by consulting the [`pyspark.sql` APIs](https://spark.apache.org/docs/latest/api/python/pyspark.sql.html) to learn more. We will not provide solutions but Session 2 will make answering these questions easier.
+You are encouraged to explore these more challenging questions by consulting the [`pyspark.sql` APIs](https://spark.apache.org/docs/3.0.1/api/python/pyspark.sql.html) to learn more. We will not provide solutions but Session 2 will make answering these questions easier.
 
 - How many **unique** hosts on a particular day (e.g., 15th August)?
 - How many **unique** hosts in total (i.e., in August 1995)?
