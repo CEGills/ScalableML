@@ -34,7 +34,7 @@ You **MUST** first connect to the [university's VPN](https://www.sheffield.ac.uk
 
 Follow the [official instruction](https://docs.hpc.shef.ac.uk/en/latest/hpc/index.html) from our university. I have get your HPC account created already (first step done). Use your university **username** such as `abc18de` and the associated password to log in. You are requried to use [Multi-factor authentication (MFA)](https://www.sheffield.ac.uk/it-services/vpn) to connect to VPN. If you have problem logging in, please contact [it-servicedesk@sheffield.ac.uk](mailto:it-servicedesk@sheffield.ac.uk).
 
-If you still have problem logging in, email me 1) your username; 2) a connection status of your VPN, 3) a screen capture of the error message (**never send me your password**). I will try to see whether I identify what the problem is. If you can log in but encounter HPC-related problem, you can email [hpc@sheffield.ac.uk](hpc@sheffield.ac.uk) for help.
+If you still have problem logging in, email me 1) your username; 2) a connection status of your VPN, 3) a screen capture of the error message (**never send me your password**). I will try to see whether I identify what the problem is. If you can log in but encounter HPC-related problem, check the [troubleshooting documentation](https://docs.hpc.shef.ac.uk/en/latest/troubleshooting.html) to see whether you have one of the [frequently asked questions](https://docs.hpc.shef.ac.uk/en/latest/troubleshooting.html#frequently-asked-questions), e.g. `bash-4.x$` being displayed instead of your username at the bash prompt. If your problem is still unresolved, you can email [it-servicedesk@sheffield.ac.uk](mailto:it-servicedesk@sheffield.ac.uk) for help.
 
 Following the [official instructions](https://docs.hpc.shef.ac.uk/en/latest/hpc/connecting.html) for [Windows](https://docs.hpc.shef.ac.uk/en/latest/hpc/connecting.html#ssh-client-software-on-windows) or [Mac OS/X and Linux](https://docs.hpc.shef.ac.uk/en/latest/hpc/connecting.html#ssh-client-software-on-mac-os-x-and-linux) to open a terminal and connect to sharc via SSH by
 
@@ -68,13 +68,13 @@ Type `qrshx` for a *regular- node **or** `qrshx -P rse-com6012` for a com6012-re
 
 #### Create a virtual environment called `myspark`
 
-`conda create -n myspark python=3.6`
+`conda create -n myspark python=3.6.2`
 
-When you are asked whether to proceed, say `y`
+When you are asked whether to proceed, say `y`. Python 3.6.3 allows pasting multiple lines.
 
 #### Activate the environment
 
-`source activate myspark`
+`conda activate myspark`
 
 You **must** see `(myspark) [abc1de@sharc-nodeXXX ~]$`, i.e. **(myspark)** in front, before proceeding. Otherwise, you did not get the proper environment. Check the above steps. 
 
@@ -109,11 +109,13 @@ SparkSession available as 'spark'.
 
 **Terminal/command line**: learn the [basic use of the command line](https://github.com/mikecroucher/Intro_to_HPC/blob/gh-pages/terminal_tutorial.md) in Linux, e.g. use `pwd` to find out your **current directory**.
 
-**Transfer files**: learn how to [transfer files to/from ShARC HPC](https://www.sheffield.ac.uk/it-services/research/hpc/using/access).
+**Transfer files**: learn how to [transfer files to/from ShARC HPC](https://www.sheffield.ac.uk/it-services/research/hpc/using/access). I recommend [MobaXterm](https://mobaxterm.mobatek.net/) for Windows and [FileZilla](https://filezilla-project.org/) for Mac/Linux. In MobaXterm, you can [drag and drop files](https://usdrcg.gitbook.io/docs/lawrence-hpc/transferring-files#:~:text=In%20MobaXterm%2C%20the%20file%20explorer,either%20computer%20as%20you%20desire.) between HPC and your local machine.
 
 **Line ending warning**: if you are using Windows, you should be aware that [line endings differ between Windows and Linux](https://stackoverflow.com/questions/426397/do-line-endings-differ-between-windows-and-linux). If you edit a shell script (below) in Windows, make sure that you use a Unix/Linux compatible editor or do the conversion before using it on HPC.
 
-### 1.4 *Optional: Install PySpark on your own machine-  
+**File recovery**: your files on HPC are regularly backed up as snapshots so you could recover files from them following the instructions on [recovering files from snapshots](https://docs.hpc.shef.ac.uk/en/latest/hpc/filestore.html#recovering-files-from-snapshots).
+
+### 1.4 *Optional: Install PySpark on your own machine*  
 
 This module focuses on the HPC terminal. You are expected to use the HPC terminal to complete the labs. ALL assessments use the HPC terminal.
 
@@ -456,7 +458,7 @@ Hello Spark: There are 71600 hosts from Japan.
   myfile.sh: ASCII text  # Output
   ```
 
-- Make sure that you are at the correct directory and the file exists using `pwd` (the current working directory) and `ls` (list the content). Check the status of your queuing/ running job(s) using `qstat` (jobs not shown are finished already). `qw` means the job is in the queue and waiting to be scheduled. `eqw` means the job is waiting in error state, in which case you should check the error and use `qdel JOB_ID` to delete the job. If you want to print out the working directory when your code is running, you would use
+- Make sure that you are at the correct directory and the file exists using `pwd` (the current working directory) and `ls` (list the content). Check the status of your queuing/ running job(s) using `qstat` (jobs not shown are finished already). `qw` means the job is in the queue and waiting to be scheduled. `eqw` means the job is waiting in error state, in which case you should check the error and use `qdel JOB_ID` to delete the job. `r` means the job is running. If you want to print out the working directory when your code is running, you would use
 
   ```python
   import os

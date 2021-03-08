@@ -1,4 +1,4 @@
-# Lab 4: $k$-means clustering
+# Lab 4: $k$-means clustering and Spark configuration
 
 [COM6012 Scalable Machine Learning **2021**](https://github.com/haipinglu/ScalableML) by [Haiping Lu](http://staffwww.dcs.shef.ac.uk/people/H.Lu/) at The University of Sheffield
 
@@ -36,6 +36,8 @@ This time, let's request for 4 cores using a regular queue and 10GB of memory, f
    source myspark.sh # myspark.sh should be under the root directory
    conda install -y matplotlib
   ```
+
+If the request *could not be scheduled*, try to reduce the number of cores (and/or the amount of memory) requested and/or use the reserved queue `-P rse-com6012`.
 
 You can either clone `ScalableML` from GitHub to `/data/abc1de/ScalableML` (again `abc1de` should be your username) via
 
